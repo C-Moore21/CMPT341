@@ -1,0 +1,48 @@
+class AlgebraParser;
+
+// Code to be included in the generated parser class
+parser code {:
+    AlgebraScanner scanner;
+    public AlgebraParser(AlgebraScanner scanner) {
+        this.scanner = scanner;
+    }
+:}
+
+// Code the parser will use to get the next token
+scan with {:
+    return scanner.yylex();
+:}
+
+// Specification of the grammar
+
+// Types of terminals and non-terminals (rules)
+terminal        PLUS, MINUS, TIMES, DIVIDE, POWER, LPAREN, RPAREN;
+terminal Double NUMBER; // NUMBER terminals (tokens) have data type Double
+terminal String IDENTIFIER; // IDENTIFIER terminals (tokens) have data type String
+
+non terminal Node expr, term, negation, power, paren;
+
+// Rules
+expr ::= expr:a PLUS term:b   {: RESULT = new PlusNode(a, b); :}
+    | expr:a MINUS term:b     {: RESULT = new MinusNode(a, b); :}
+    | term:a                  {: RESULT = a; :}
+;
+
+term ::= term:a TIMES negation:b  {: RESULT = new TimesNode(a, b); :}
+    | term:a DIVIDE negation:b    {: RESULT = new DivideNode(a, b); :}
+    | negation:a                  {: RESULT = a; :}
+;
+
+negation ::= MINUS power:a        {: RESULT = new MinusNode(new ValueNode(0), a); :}
+    | power:a                     {: RESULT = a; :}
+;
+
+power ::= paren:a POWER power:b   {: RESULT = new PowerNode(a, b); :}
+    | paren:a                     {: RESULT = a; :}
+;
+
+paren ::= LPAREN expr:a RPAREN    {: RESULT = a; :}
+    | NUMBER:x                    {: RESULT = new ValueNode(x); :}
+    | IDENTIFIER:name             {: RESULT = new VariableNode(name); :}
+;
+
