@@ -71,12 +71,12 @@ import java_cup.runtime.Symbol;
         return new Symbol(JazzParserSym.IDENTIFIER, yytext());
     }
 
-   \w input {
+    \winput {
 	System.out.println("Keyword: " + yytext());
     return new symbol(JazzParserSym.INPUT);
     }
-    
-    \w print {
+
+    \wprint {
 	System.out.println("Keyword: " + yytext());
     return new symbol(JazzParserSym.PRINT);
     }
@@ -85,7 +85,7 @@ import java_cup.runtime.Symbol;
 	System.out.println("Assignment: " + yytext());
     return symbol(JazzParserSym.ASSIGNED);
     }
-    
+
     \, {
 	System.out.println(",");
     return symbol(JazzParserSym.COMMA);
@@ -95,7 +95,7 @@ import java_cup.runtime.Symbol;
         System.out.println("=");
         return symbol(JazzParserSym.EQUALS);
     }
-    
+
     ((sqrt)|(cos)|(sin)|(tan))+\([\w\d]+[^,]\) {
     	System.out.println("Algebraic Function: " + yytext());
     	return new Symbol(JazzParserSym.IDENTIFIER, yytext());
@@ -115,8 +115,8 @@ import java_cup.runtime.Symbol;
 
 
        <STRING> {
-      \"                             { yybegin(YYINITIAL); 
-                                       return symbol(JazzParserSym.STRING_LITERAL, 
+      \"                             { yybegin(YYINITIAL);
+                                       return symbol(JazzParserSym.STRING_LITERAL,
                                        string.toString()); }
       [^\n\r\"\\]+                   { string.append( yytext() ); }
       \\t                            { string.append('\t'); }
