@@ -1,9 +1,9 @@
-class AlgebraParser;
+class JazzParser;
 
 // Code to be included in the generated parser class
 parser code {:
-    AlgebraScanner scanner;
-    public AlgebraParser(AlgebraScanner scanner) {
+    JazzScanner scanner;
+    public JazzParser(JazzScanner scanner) {
         this.scanner = scanner;
     }
 :}

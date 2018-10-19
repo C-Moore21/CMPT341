@@ -1,0 +1,4 @@
+g = 9.81;
+t = 5;
+height = 1000 - 1/2*g*t^2;
+print "The height after ", t, " seconds is ", height, " meters.";
