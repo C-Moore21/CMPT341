@@ -98,7 +98,7 @@ import java_cup.runtime.Symbol;
 
     ((sqrt)|(cos)|(sin)|(tan))+\([\w\d]+[^,]\) {
     	System.out.println("Algebraic Function: " + yytext());
-    	return new Symbol(JazzParserSym.IDENTIFIER, yytext());
+    	return new Symbol(JazzParserSym.STATEMENT, yytext());
     }
 
     // Matches any whitespace
